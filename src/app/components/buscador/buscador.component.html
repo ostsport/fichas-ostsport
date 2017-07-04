@@ -1,0 +1,58 @@
+<h1>Buscar fichas</h1>
+<br>
+
+<form (ngSubmit)="buscar()" #formulario=ngForm>
+  <div class="row animated fadeIn fast">
+    <div class="col-md-8">
+      <input type="text" name="texto" class="form-control" style="margin-bottom: 10px"
+        [(ngModel)]="texto" placeholder="Texto a buscar">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" name="btnBuscar" class="btn btn-outline-primary btn-block"
+        style="margin-bottom: 10px">Buscar</button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" name="btnLimpiar" class="btn btn-outline-danger btn-block"
+        (click)="limpiar()">Limpiar</button>
+    </div>
+  </div>
+</form>
+<hr>
+
+<div class="row animated fadeIn fast" *ngIf="!filtroVacio">
+  <div class="col-md-12">
+
+    <div class="table-responsive">
+
+      <table class="table">
+        <!-- <thead class="thead-inverse table-bordered"> -->
+        <thead class="table-bordered table-info">
+          <tr>
+            <th>Paciente</th>
+            <th>Edad</th>
+            <th width="100rem"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ficha of fichas" class="fila-centrada">
+            <td>{{ficha.nombre}} {{ficha.apellidos}}</td>
+            <td>{{ficha.edad}}</td>
+            <td>
+              <button type="button" class="btn btn-outline-primary botonFila" (click)="verDetalle(ficha.key$)"><i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
+              <button type="button" class="btn btn-outline-danger botonFila" (click)="borrar(ficha.key$)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="(fichas) == 0 && !fichasService.isCargando()" class="alert alert-info" role="alert">
+        <strong>No hay</strong> registros para mostrar
+      </div>
+
+      <div *ngIf="fichasService.isCargando()" class="alert alert-warning" role="alert">
+        <strong>Cargando...</strong> por favor espera
+      </div>
+
+    </div>
+  </div>
+</div>

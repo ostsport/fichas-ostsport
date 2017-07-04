@@ -1,0 +1,51 @@
+<h3>Consulta de paciente <small *ngIf="!cargando">{{ficha.nombre}} {{ficha.apellidos}}</small></h3>
+<hr>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12" *ngIf="!cargando">
+    <form (ngSubmit)="guardar()" #formulario=ngForm>
+
+      <div class="form-group row align-items-center">
+        <div class="col-md-1">
+          <label>Fecha</label>
+        </div>
+        <div class="col-md-3">
+          <input type="date" class="form-control" [ngModel]="consulta.fecha | date:'y-MM-dd'"
+            (ngModelChange)="consulta.fecha = $event" name="fecha" required="" width="100">
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <div class="col-md-1">
+          <label>Motivo</label>
+        </div>
+        <div class="col-md-11">
+          <textarea name="motivo" class="form-control"  [(ngModel)]="consulta.motivo"
+            rows="10" cols="80" required=""></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row align-items-center">
+        <div class="col-md-1">
+          <label>Notas</label>
+        </div>
+        <div class="col-md-11">
+          <textarea name="observaciones" class="form-control" [(ngModel)]="consulta.notas"
+            rows="8" cols="80"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!formulario.valid">
+          Guardar cambios
+        </button>
+
+        <button type="button" class="btn btn-outline-danger" (click)="volver()">Volver</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="cargando" class="alert alert-warning" role="alert">
+  <strong>Cargando...</strong> por favor espera
+</div>
